@@ -1,7 +1,7 @@
 const express=require("express");
 const app=express();
 const PORT=3000;
-const products=require("./data/dataAboutProducts");
+const products=require("../data/dataAboutProducts");
 const jsonParser = express.json();
 
 app.get("/", (req, res)=>{

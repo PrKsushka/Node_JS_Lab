@@ -1,7 +1,7 @@
 const http=require("http");
 const PORT=3000;
-const products=require("./data/dataAboutProducts");
-const service=require("./service/service");
+const products=require("../data/dataAboutProducts");
+const service=require("../service/service");
 
 const server=http.createServer(function (req,res) {
     const url=req.url;
