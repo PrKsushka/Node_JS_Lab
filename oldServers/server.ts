@@ -1,8 +1,12 @@
+import 'dotenv/config';
+import {Request, Response} from "express";
+import products from "../data/dataAboutProducts";
+
 const http = require("http");
-const products = require("../data/dataAboutProducts");
 const service = require("../service/service");
 
-const server = http.createServer(function (req, res) {
+
+const server = http.createServer(function (req: Request, res: Response) {
     const {url, method} = req;
     if (url === "/") {
         res.writeHead(200, {"Content-Type": "text/html"});
@@ -21,10 +25,11 @@ const server = http.createServer(function (req, res) {
 })
 
 const PORT = process.env.PORT;
-server.listen(PORT, function (error) {
+server.listen(PORT, function (error: string) {
     if (error) {
         console.log("Ooops, something went wrong", error);
     } else {
         console.log(`Server is listening on port ${PORT}`)
     }
 })
+

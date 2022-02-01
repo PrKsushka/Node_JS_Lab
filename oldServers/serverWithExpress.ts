@@ -1,18 +1,20 @@
+import 'dotenv/config';
+import products from "../data/dataAboutProducts";
+import {Request, Response} from "express";
+
 const express = require("express");
 const app = express();
-const PORT = 3000;
-const products = require("../data/dataAboutProducts");
 const jsonParser = express.json();
 
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
     res.send("Hello world");
 });
 
-app.get("/products", (req, res) => {
+app.get("/products", (req: Request, res: Response) => {
     res.status(201).json(products)
 })
 
-app.post("/products", jsonParser, (req, res) => {
+app.post("/products", jsonParser, (req: Request, res: Response) => {
     if (!req.body) {
         return res.status(400).json({
             status: "error",
@@ -24,6 +26,7 @@ app.post("/products", jsonParser, (req, res) => {
     }
 });
 
+const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)
 });

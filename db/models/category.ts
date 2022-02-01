@@ -1,4 +1,9 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+
+interface CategoryTypes extends mongoose.Document {
+    displayName: string;
+    createdAt: Date;
+}
 
 const categorySchema = new mongoose.Schema({
     displayName: {
@@ -10,5 +15,5 @@ const categorySchema = new mongoose.Schema({
         require: true
     }
 });
-const Category = mongoose.model("Category", categorySchema);
+const Category = mongoose.model<CategoryTypes>("Category", categorySchema);
 module.exports = Category;

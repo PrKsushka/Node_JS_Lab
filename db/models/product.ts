@@ -1,4 +1,13 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+
+interface ProductsTypes extends mongoose.Document {
+    displayName: string;
+    categoryId: number;
+    createdAt: Date;
+    totalRating: number;
+    price: number;
+}
+
 const productSchema = new mongoose.Schema({
     displayName: {
         type: String,
@@ -21,5 +30,5 @@ const productSchema = new mongoose.Schema({
         require: true
     }
 });
-const Product = mongoose.model("Products", productSchema);
+const Product = mongoose.model<ProductsTypes>("Products", productSchema);
 module.exports = Product;

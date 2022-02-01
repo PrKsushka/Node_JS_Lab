@@ -12,4 +12,4 @@ let products = [
         "price": "50$",
     }
 ];
-module.exports = products;
+export default products;

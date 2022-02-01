@@ -1,4 +1,5 @@
-const express = require("express");
+import * as express from "express";
+
 const router = express.Router();
 const {getDataAboutProducts} = require("../../controller/product/dataAboutProducts");
 

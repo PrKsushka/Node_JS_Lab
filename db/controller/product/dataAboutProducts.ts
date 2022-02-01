@@ -1,5 +1,7 @@
 const Product = require("../../models/product");
-const getDataAboutProducts = async (req, res) => {
+import {Request, Response} from "express";
+
+const getDataAboutProducts = async (req: Request, res: Response) => {
     try {
         const products = await Product.find();
         res.status(200).json(products);
