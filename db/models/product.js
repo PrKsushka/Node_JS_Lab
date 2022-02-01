@@ -6,7 +6,7 @@ const productSchema=new mongoose.Schema({
     },
     categoryId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'category'
+        ref: 'Category'
     },
     createdAt: {
         type: Date,
@@ -21,5 +21,5 @@ const productSchema=new mongoose.Schema({
         require: true
     }
 });
-const Product=mongoose.model("products", productSchema);
+const Product=mongoose.model("Products", productSchema);
 module.exports=Product;

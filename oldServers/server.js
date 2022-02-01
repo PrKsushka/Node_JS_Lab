@@ -1,11 +1,10 @@
 const http=require("http");
-const PORT=3000;
+const PORT=process.env.PORT;
 const products=require("../data/dataAboutProducts");
 const service=require("../service/service");
 
 const server=http.createServer(function (req,res) {
-    const url=req.url;
-    const method=req.method;
+    const { url, method } = req;
     if(url==="/"){
         res.writeHead(200, {"Content-Type":"text/html"});
         res.write("Hello");
