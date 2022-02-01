@@ -1,5 +1,5 @@
-const products=require("../data/dataAboutProducts");
-exports.postDataAboutProducts= function (req, res) {
+const products = require("../data/dataAboutProducts");
+exports.postDataAboutProducts = function (req, res) {
     let body = '';
     req.on('data', function (chunk) {
         body += chunk;
