@@ -1,4 +1,4 @@
-let products=[
+let products = [
     {
         "displayName": "Cyberpank 2077",
         "price": "60$",
@@ -12,4 +12,4 @@ let products=[
         "price": "50$",
     }
 ];
-module.exports=products;
+module.exports = products;
