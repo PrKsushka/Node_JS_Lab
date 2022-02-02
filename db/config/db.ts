@@ -1,15 +1,12 @@
 import mongoose from "mongoose";
 import {ConnectOptions} from "mongoose";
-
-require("dotenv").config();
+import 'dotenv/config';
 
 const MONGO_URI = `mongodb+srv://ksushka:${process.env.DB_PASS}@shop.rtbtb.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
-
 interface ConnectionOptionsExtend extends ConnectOptions {
     useNewUrlParser: boolean
     useUnifiedTopology: boolean
 }
-
 const options: ConnectionOptionsExtend = {
     useNewUrlParser: true,
     useUnifiedTopology: true

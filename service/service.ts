@@ -1,7 +1,7 @@
 import products from "../data/dataAboutProducts";
-import {Request, Response} from "express";
+import {IncomingMessage, ServerResponse} from 'http';
 
-exports.postDataAboutProducts = function (req: Request, res: Response) {
+const postDataAboutProducts = function (req: IncomingMessage, res: ServerResponse) {
     let body = '';
     req.on('data', function (chunk) {
         body += chunk;
@@ -14,3 +14,4 @@ exports.postDataAboutProducts = function (req: Request, res: Response) {
         res.end(JSON.stringify(postBody));
     });
 };
+export default postDataAboutProducts;

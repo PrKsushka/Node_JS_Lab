@@ -1,4 +1,8 @@
-let products = [
+interface ProductsTypes {
+    displayName: string;
+    price: string;
+}
+let products: Array<ProductsTypes> = [
     {
         "displayName": "Cyberpank 2077",
         "price": "60$",

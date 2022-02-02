@@ -1,12 +1,10 @@
 import 'dotenv/config';
-import {Request, Response} from "express";
 import products from "../data/dataAboutProducts";
+import postDataAboutProducts from "../service/service";
+import * as http from "http";
+import {IncomingMessage, ServerResponse} from 'http';
 
-const http = require("http");
-const service = require("../service/service");
-
-
-const server = http.createServer(function (req: Request, res: Response) {
+const server = http.createServer(function (req: IncomingMessage, res: ServerResponse) {
     const {url, method} = req;
     if (url === "/") {
         res.writeHead(200, {"Content-Type": "text/html"});
@@ -17,7 +15,7 @@ const server = http.createServer(function (req: Request, res: Response) {
         res.write(JSON.stringify(products));
         res.end();
     } else if (url === "/products" && method === "POST") {
-        service.postDataAboutProducts(req, res);
+        postDataAboutProducts(req, res);
     } else {
         res.writeHead(400, {"Content-Type": "text/html"});
         res.end("Page not found");
@@ -25,7 +23,7 @@ const server = http.createServer(function (req: Request, res: Response) {
 })
 
 const PORT = process.env.PORT;
-server.listen(PORT, function (error: string) {
+server.listen(PORT, function (error?: string) {
     if (error) {
         console.log("Ooops, something went wrong", error);
     } else {

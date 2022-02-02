@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import products from "../data/dataAboutProducts";
 import {Request, Response} from "express";
+import express from "express";
 
-const express = require("express");
 const app = express();
 const jsonParser = express.json();
 
@@ -25,7 +25,6 @@ app.post("/products", jsonParser, (req: Request, res: Response) => {
         return res.status(201).json(req.body);
     }
 });
-
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`)
