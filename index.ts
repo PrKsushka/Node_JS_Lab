@@ -1,12 +1,12 @@
+import connectionToDataBase from "./db/config/db";
+import express from "express";
+import getDataAboutProductsRouter from "./db/routes/product/productRoutes";
 require("dotenv").config();
-const express = require("express");
-const connectionToDataBase = require("./db/config/db");
-const getDataAboutProducts = require("./db/routes/product/productRoutes");
 
 
 const app = express();
 
-app.use(getDataAboutProducts);
+app.use(getDataAboutProductsRouter);
 
 
 app.listen(process.env.PORT, () => {

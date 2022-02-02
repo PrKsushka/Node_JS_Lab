@@ -23,4 +23,4 @@ const connectionToDataBase = async () => {
         process.exit(1);
     }
 }
-module.exports = connectionToDataBase;
+export default connectionToDataBase;

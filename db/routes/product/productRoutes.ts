@@ -1,7 +1,8 @@
 import * as express from "express";
+import getDataAboutProducts from "../../controller/product/dataAboutProducts";
 
-const router = express.Router();
-const {getDataAboutProducts} = require("../../controller/product/dataAboutProducts");
+const getDataAboutProductsRouter = express.Router();
 
-router.get("/products", getDataAboutProducts);
-module.exports = router;
+
+getDataAboutProductsRouter.get("/products", getDataAboutProducts);
+export default getDataAboutProductsRouter;

@@ -1,4 +1,4 @@
-const Product = require("../../models/product");
+import Product from "../../models/product";
 import {Request, Response} from "express";
 
 const getDataAboutProducts = async (req: Request, res: Response) => {
@@ -10,6 +10,4 @@ const getDataAboutProducts = async (req: Request, res: Response) => {
     }
 }
 
-module.exports = {
-    getDataAboutProducts
-}
+export default getDataAboutProducts;
