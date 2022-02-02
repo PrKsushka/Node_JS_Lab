@@ -2,10 +2,11 @@
   "name": "node_js_lab",
   "version": "1.0.0",
   "description": "",
-  "main": "oldServers/server.js",
+  "main": "index.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "ts-node index.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -18,8 +19,15 @@
   },
   "homepage": "https://github.com/PrKsushka/Node_JS_Lab#readme",
   "dependencies": {
+    "@types/express": "^4.17.13",
     "dotenv": "^14.3.2",
     "express": "^4.17.2",
     "mongoose": "^6.1.8"
+  },
+  "devDependencies": {
+    "@types/mongoose": "^5.11.97",
+    "ts-node": "^10.4.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
   }
 }
