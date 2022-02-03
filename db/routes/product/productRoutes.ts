@@ -1,6 +1,6 @@
-import * as express from "express";
-import getDataAboutProducts from "../../controller/product/dataAboutProducts";
+import * as express from 'express';
+import getDataAboutProducts from '../../controller/product/dataAboutProducts';
 
 const getDataAboutProductsRouter = express.Router();
-getDataAboutProductsRouter.get("/products", getDataAboutProducts);
+getDataAboutProductsRouter.get('/products', getDataAboutProducts);
 export default getDataAboutProductsRouter;
