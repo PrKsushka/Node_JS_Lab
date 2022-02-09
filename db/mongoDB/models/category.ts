@@ -1,9 +1,5 @@
 import mongoose from 'mongoose';
-
-interface CategoryTypes extends mongoose.Document {
-  displayName: string;
-  createdAt: Date;
-}
+import CategoryTypes from '../../types/categoryType';
 
 const categorySchema = new mongoose.Schema({
   displayName: {

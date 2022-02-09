@@ -1,6 +1,10 @@
 import * as express from 'express';
-import getDataAboutProducts from '../../controller/product/dataAboutProducts';
+import getDataAboutProductsWithPostgres from '../../postgres/controller/product/getDataAboutProducts';
+import getDataAboutProductsWithMongoDB from '../../mongoDB/controller/product/dataAboutProducts';
 
-const getDataAboutProductsRouter = express.Router();
-getDataAboutProductsRouter.get('/products', getDataAboutProducts);
-export default getDataAboutProductsRouter;
+const getDataAboutProductsRouterForMongoDB = express.Router();
+const getDataAboutProductsRouterForPostgres = express.Router();
+
+getDataAboutProductsRouterForMongoDB.get('/products', getDataAboutProductsWithMongoDB);
+getDataAboutProductsRouterForPostgres.get('/products', getDataAboutProductsWithPostgres);
+export default { getDataAboutProductsRouterForMongoDB, getDataAboutProductsRouterForPostgres };
