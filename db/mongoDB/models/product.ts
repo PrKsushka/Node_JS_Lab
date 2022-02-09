@@ -1,12 +1,5 @@
 import mongoose from 'mongoose';
-
-interface ProductsTypes extends mongoose.Document {
-  displayName: string;
-  categoryId: number;
-  createdAt: Date;
-  totalRating: number;
-  price: number;
-}
+import ProductsTypes from '../../types/productType';
 
 const productSchema = new mongoose.Schema({
   displayName: {

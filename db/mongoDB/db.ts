@@ -13,7 +13,7 @@ const options: ConnectionOptionsExtend = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 };
-const connectionToDataBase = async () => {
+const connectionToMongoDataBase = async () => {
   try {
     await mongoose.connect(MONGO_URI, options);
     console.log('MongoDB connection success');
@@ -22,4 +22,4 @@ const connectionToDataBase = async () => {
     process.exit(1);
   }
 };
-export default connectionToDataBase;
+export default connectionToMongoDataBase;
