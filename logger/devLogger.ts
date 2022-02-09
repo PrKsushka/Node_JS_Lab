@@ -1,6 +1,6 @@
 import winston, { format, createLogger } from 'winston';
 
-type logFormatParams = {
+type LogFormatParams = {
   level: string;
   message: string;
   stack?: any;
@@ -9,7 +9,7 @@ type logFormatParams = {
 const { combine } = format;
 
 const buildDevLogger = () => {
-  const logFormat = format.printf(({ level, message, stack }: logFormatParams) => {
+  const logFormat = format.printf(({ level, message, stack }: LogFormatParams) => {
     return `${level}: ${message || stack}`;
   });
   return createLogger({
