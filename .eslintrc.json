@@ -18,7 +18,8 @@
     "prettier"
   ],
   "rules": {
-      "prettier/prettier": "error",
-      "no-unused-vars": "warn"
+    "prettier/prettier": "error",
+    "no-unused-vars": "warn",
+    "eslint.autoFixOnSave": true
   }
 }
