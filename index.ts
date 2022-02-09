@@ -5,6 +5,7 @@ import * as process from 'process';
 import connectionToMongoDataBase from './db/mongoDB/db';
 import connectionToPostgresDataBase from './db/postgres/db';
 import productRoutes from './db/routes/product/productRoutes';
+import logger from './logger/logger';
 
 const app = express();
 if (process.argv[2] === 'mongodb') {
@@ -15,5 +16,5 @@ if (process.argv[2] === 'mongodb') {
   app.use(productRoutes.getDataAboutProductsRouterForPostgres);
 }
 app.listen(process.env.PORT, () => {
-  console.log(`Server is running on port ${process.env.PORT}`);
+  logger.info(`Server is running on port ${process.env.PORT}`);
 });

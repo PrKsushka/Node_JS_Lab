@@ -1,12 +1,13 @@
 import { createConnection } from 'typeorm';
+import logger from '../../logger/logger';
 
 const connectionToPostgresDataBase = () => {
   try {
     createConnection().then(() => {
-      console.log('Postgres connection success');
+      logger.info('Postgres connection success');
     });
   } catch (err) {
-    console.error('Postgres connection failed');
+    logger.error('Postgres connection failed');
     process.exit(1);
   }
 };
