@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { ConnectOptions } from 'mongoose';
 import 'dotenv/config';
+import logger from '../../logger/logger';
 
 const MONGO_URI = `mongodb+srv://ksushka:${process.env.DB_PASS}@shop.rtbtb.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
@@ -16,9 +17,9 @@ const options: ConnectionOptionsExtend = {
 const connectionToMongoDataBase = async () => {
   try {
     await mongoose.connect(MONGO_URI, options);
-    console.log('MongoDB connection success');
+    logger.info('MongoDB connection success');
   } catch (err) {
-    console.error('Mongodb connection failed');
+    logger.error('Mongodb connection failed');
     process.exit(1);
   }
 };
