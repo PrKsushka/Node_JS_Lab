@@ -1,10 +1,9 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
 import Product from './product';
 import CategoryTypes from '../../types/categoryType';
 
 @Entity()
 export class Category implements CategoryTypes {
-  @OneToMany(() => Product, (product) => product.categoryId)
   @PrimaryColumn()
   id: number;
 
@@ -13,6 +12,9 @@ export class Category implements CategoryTypes {
 
   @Column({ type: 'date' })
   createdAt: string;
+
+  @OneToMany(() => Product, (product) => product.categoryId)
+  products: Product[];
 }
 
 export default Category;
