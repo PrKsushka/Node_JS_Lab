@@ -21,8 +21,6 @@ export class Product implements ProductType {
 
   @Column()
   price: number;
-
-
 }
 
 export default Product;
