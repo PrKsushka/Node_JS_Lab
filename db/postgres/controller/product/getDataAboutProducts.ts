@@ -1,43 +1,46 @@
 import { Request, Response } from 'express';
 import { Between, getRepository, ILike, LessThanOrEqual, MoreThanOrEqual } from 'typeorm';
 import Product from '../../entity/product';
+import CustomError from '../../../customError/customError';
 
 const getDataAboutProductsWithPostgres = async (req: Request, res: Response) => {
   try {
     let { page = 1, limit = 10 } = req.query;
     let option = {};
-    if (req.query.sortBy === 'price:asc') {
-      option = {
-        ...option,
-        order: {
-          price: 'ASC',
-        },
-      };
+    if (req.query.sortBy) {
+      if (req.query.sortBy === 'price:asc') {
+        option = {
+          ...option,
+          order: {
+            price: 'ASC',
+          },
+        };
+      } else if (req.query.sortBy === 'price:desc') {
+        option = {
+          ...option,
+          order: {
+            price: 'DESC',
+          },
+        };
+      } else if (req.query.sortBy === 'createdAt:asc') {
+        option = {
+          ...option,
+          order: {
+            createdAt: 'ASC',
+          },
+        };
+      } else if (req.query.sortBy === 'createdAt:desc') {
+        option = {
+          ...option,
+          order: {
+            createdAt: 'DESC',
+          },
+        };
+      } else {
+        throw new CustomError('Not such value');
+      }
     }
-    if (req.query.sortBy === 'price:desc') {
-      option = {
-        ...option,
-        order: {
-          price: 'DESC',
-        },
-      };
-    }
-    if (req.query.sortBy === 'createdAt:asc') {
-      option = {
-        ...option,
-        order: {
-          createdAt: 'ASC',
-        },
-      };
-    }
-    if (req.query.sortBy === 'createdAt:desc') {
-      option = {
-        ...option,
-        order: {
-          createdAt: 'DESC',
-        },
-      };
-    }
+
     if (req.query.price) {
       let values: string | any = req.query.price;
       let arr: Array<string> = values.split(':');
@@ -89,9 +92,14 @@ const getDataAboutProductsWithPostgres = async (req: Request, res: Response) => 
 
     const products = await getRepository(Product);
     const data = await products.find({ ...option, skip: (Number(page) - 1) * Number(limit), take: Number(limit) });
+    if (data.length === 0) {
+      throw new CustomError('Not found');
+    }
     res.status(200).json(data);
-  } catch (e) {
-    res.status(500).json({ message: 'Err' });
+  } catch (e: any) {
+    const customError = new CustomError(e.name);
+    const error = customError.defineStatus();
+    res.status(error.status).json({ message: error.message });
   }
 };
 export default getDataAboutProductsWithPostgres;
