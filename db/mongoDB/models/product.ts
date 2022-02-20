@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
   },
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Category',
+    ref: 'Categories',
   },
   createdAt: {
     type: Date,
@@ -23,5 +23,6 @@ const productSchema = new mongoose.Schema({
     require: true,
   },
 });
+productSchema.index({ displayName: 'text' });
 const Product = mongoose.model<ProductsTypes>('Products', productSchema);
 export default Product;

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import Category from './category';
 import ProductType from '../../types/productType';
 
@@ -11,7 +11,7 @@ export class Product implements ProductType {
   displayName: string;
 
   @ManyToOne(() => Category, (category) => category.id)
-  categoryId: number;
+  categoryId: Category;
 
   @Column({ type: 'date' })
   createdAt: string;

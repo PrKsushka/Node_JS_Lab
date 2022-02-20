@@ -1,7 +1,7 @@
 interface ProductsTypes {
   id: number;
   displayName: string;
-  categoryId: number;
+  categoryId: any;
   createdAt: Date | string;
   totalRating: number;
   price: number;
