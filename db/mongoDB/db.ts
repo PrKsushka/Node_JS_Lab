@@ -2,8 +2,6 @@ import mongoose from 'mongoose';
 import { ConnectOptions } from 'mongoose';
 import 'dotenv/config';
 import logger from '../../logger/logger';
-import Category from './models/category';
-import Product from './models/product';
 
 const MONGO_URI = `mongodb+srv://ksushka:${process.env.DB_PASS}@shop.rtbtb.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 

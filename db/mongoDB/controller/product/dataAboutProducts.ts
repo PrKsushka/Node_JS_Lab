@@ -2,7 +2,7 @@ import Product from '../../models/product';
 import { Request, Response } from 'express';
 import CustomError from '../../../customError/customError';
 
-const getDataAboutProductsWithMongoDB = async (req: Request, res: Response, next: any) => {
+const getDataAboutProductsWithMongoDB = async (req: Request, res: Response) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     let findOptions = {};
