@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Category from '../../entity/category';
 import { Equal, getRepository } from 'typeorm';
 import category from '../../entity/category';
+import CustomError from '../../../customError/customError';
 
 const getDataAboutCategoriesPostgres = async (req: Request, res: Response) => {
   try {
@@ -32,9 +33,20 @@ const getDataAboutCategoriesPostgres = async (req: Request, res: Response) => {
         el.products.sort((a, b) => b.totalRating - a.totalRating).splice(3, el.products.length);
       });
     }
+    if (data.length === 0) {
+      throw new CustomError('Not found');
+    }
+    if (
+      (req.query.includeProducts && req.query.includeProducts !== 'true') ||
+      (req.query.includeTop3Products && req.query.includeTop3Products !== 'top')
+    ) {
+      throw new CustomError('Not such value');
+    }
     res.status(200).json(data);
-  } catch (e) {
-    res.status(500).json({ message: 'Err' });
+  } catch (e: any) {
+    const customError = new CustomError(e.name);
+    const error = customError.defineStatus();
+    res.status(error.status).json({ message: error.message });
   }
 };
 export default getDataAboutCategoriesPostgres;

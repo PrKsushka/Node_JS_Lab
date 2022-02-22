@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Category from '../../models/category';
 import { ObjectId } from 'mongodb';
+import CustomError from '../../../customError/customError';
 
 const getDataAboutCategoriesMongoDB = async (req: Request, res: Response) => {
   try {
@@ -58,9 +59,20 @@ const getDataAboutCategoriesMongoDB = async (req: Request, res: Response) => {
     }
 
     data = await Category.aggregate(aggregateOption);
+    if (data.length === 0) {
+      throw new CustomError('Not found');
+    }
+    if (
+      (req.query.includeProducts && req.query.includeProducts !== 'true') ||
+      (req.query.includeTop3Products && req.query.includeTop3Products !== 'top')
+    ) {
+      throw new CustomError('Not such value');
+    }
     res.status(200).json(JSON.stringify(data));
-  } catch (e) {
-    res.status(500).json({ message: 'Err' });
+  } catch (e: Error | any) {
+    const customError = new CustomError(e.name);
+    const error = customError.defineStatus();
+    res.status(error.status).json({ message: error.message });
   }
 };
 export default getDataAboutCategoriesMongoDB;
