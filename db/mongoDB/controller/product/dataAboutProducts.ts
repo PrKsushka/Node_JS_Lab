@@ -1,6 +1,7 @@
 import Product from '../../models/product';
 import { Request, Response } from 'express';
 import CustomError from '../../../customError/customError';
+import CustomErrorTypes from '../../../customError/customError.types';
 
 const getDataAboutProductsWithMongoDB = async (req: Request, res: Response) => {
   try {
@@ -30,8 +31,8 @@ const getDataAboutProductsWithMongoDB = async (req: Request, res: Response) => {
     }
 
     if (req.query.price) {
-      let values: string | any = req.query.price;
-      let arr: Array<string> = values.split(':');
+      const values: string | any = req.query.price;
+      const arr: Array<string> = values.split(':');
       let min = null;
       let max = null;
       if (arr.length === 1) {
@@ -78,9 +79,9 @@ const getDataAboutProductsWithMongoDB = async (req: Request, res: Response) => {
       throw new CustomError('Not found');
     }
     res.status(200).json(data);
-  } catch (e: Error | any) {
+  } catch (e: CustomErrorTypes | any) {
     const customError = new CustomError(e.name);
-    const error = customError.defineStatus();
+    const error = customError.defineCategoryAndProductStatus();
     res.status(error.status).json({ message: error.message });
   }
 };

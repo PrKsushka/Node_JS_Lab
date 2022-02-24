@@ -2,10 +2,11 @@ import { Request, Response } from 'express';
 import { Between, getRepository, ILike, LessThanOrEqual, MoreThanOrEqual } from 'typeorm';
 import Product from '../../entity/product';
 import CustomError from '../../../customError/customError';
+import CustomErrorTypes from '../../../customError/customError.types';
 
 const getDataAboutProductsWithPostgres = async (req: Request, res: Response) => {
   try {
-    let { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 10 } = req.query;
     let option = {};
     if (req.query.sortBy) {
       if (req.query.sortBy === 'price:asc') {
@@ -42,8 +43,8 @@ const getDataAboutProductsWithPostgres = async (req: Request, res: Response) => 
     }
 
     if (req.query.price) {
-      let values: string | any = req.query.price;
-      let arr: Array<string> = values.split(':');
+      const values: string | any = req.query.price;
+      const arr: Array<string> = values.split(':');
       let min = null;
       let max = null;
       if (arr.length === 1) {
@@ -96,9 +97,9 @@ const getDataAboutProductsWithPostgres = async (req: Request, res: Response) => 
       throw new CustomError('Not found');
     }
     res.status(200).json(data);
-  } catch (e: any) {
+  } catch (e: CustomErrorTypes | any) {
     const customError = new CustomError(e.name);
-    const error = customError.defineStatus();
+    const error = customError.defineCategoryAndProductStatus();
     res.status(error.status).json({ message: error.message });
   }
 };

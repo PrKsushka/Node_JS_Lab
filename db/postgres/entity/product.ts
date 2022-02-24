@@ -3,7 +3,7 @@ import Category from './category';
 import ProductType from '../../types/productType';
 
 @Entity()
-export class Product implements ProductType {
+class Product implements ProductType {
   @PrimaryGeneratedColumn()
   id: number;
 

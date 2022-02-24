@@ -3,6 +3,7 @@ import Category from '../../entity/category';
 import { Equal, getRepository } from 'typeorm';
 import category from '../../entity/category';
 import CustomError from '../../../customError/customError';
+import CustomErrorTypes from '../../../customError/customError.types';
 
 const getDataAboutCategoriesPostgres = async (req: Request, res: Response) => {
   try {
@@ -27,7 +28,7 @@ const getDataAboutCategoriesPostgres = async (req: Request, res: Response) => {
         };
       }
     }
-    let data = await categories.find(findOptions);
+    const data = await categories.find(findOptions);
     if (req.query.includeProducts === 'true' && req.query.includeTop3Products === 'top') {
       data.forEach((el) => {
         el.products.sort((a, b) => b.totalRating - a.totalRating).splice(3, el.products.length);
@@ -43,9 +44,9 @@ const getDataAboutCategoriesPostgres = async (req: Request, res: Response) => {
       throw new CustomError('Not such value');
     }
     res.status(200).json(data);
-  } catch (e: any) {
+  } catch (e: CustomErrorTypes | any) {
     const customError = new CustomError(e.name);
-    const error = customError.defineStatus();
+    const error = customError.defineCategoryAndProductStatus();
     res.status(error.status).json({ message: error.message });
   }
 };

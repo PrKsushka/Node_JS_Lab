@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import Category from '../../models/category';
 import { ObjectId } from 'mongodb';
 import CustomError from '../../../customError/customError';
+import CustomErrorTypes from '../../../customError/customError.types';
 
 const getDataAboutCategoriesMongoDB = async (req: Request, res: Response) => {
   try {
@@ -69,9 +70,9 @@ const getDataAboutCategoriesMongoDB = async (req: Request, res: Response) => {
       throw new CustomError('Not such value');
     }
     res.status(200).json(JSON.stringify(data));
-  } catch (e: Error | any) {
+  } catch (e: CustomErrorTypes | any) {
     const customError = new CustomError(e.name);
-    const error = customError.defineStatus();
+    const error = customError.defineCategoryAndProductStatus();
     res.status(error.status).json({ message: error.message });
   }
 };
