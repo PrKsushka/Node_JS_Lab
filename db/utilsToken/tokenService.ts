@@ -6,7 +6,7 @@ class TokenService {
   }
 
   static refreshToken(id: number, username: string, role: string) {
-    return jwt.sign({ id, username, role }, 'refresh', { expiresIn: '1h' });
+    return jwt.sign({ id, username, role }, 'refresh', { expiresIn: '10d' });
   }
 }
 
