@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 import User from '../../models/user';
-import CustomError from '../../../customError/customError';
 import bcrypt from 'bcrypt';
-import CustomErrorTypes from '../../../customError/customError.types';
+import { StatusCodes } from 'http-status-codes';
 
 const changePassword = async (req: Request | any, res: Response) => {
   try {
@@ -12,13 +11,11 @@ const changePassword = async (req: Request | any, res: Response) => {
     if (match) {
       await User.findOneAndUpdate({ _id: req.user.id }, { password: newPassword });
     } else {
-      throw CustomError.unauthorizedRequest('Password is not correct');
+      return res.status(StatusCodes.UNAUTHORIZED).send({ message: 'Password is not correct' });
     }
-    res.status(200).json({ message: 'Password has been changed' });
-  } catch (e: CustomErrorTypes | any) {
-    const customError = new CustomError(e.name, e.status, e.message);
-    const error = customError.values;
-    res.status(error.status).json({ message: error.message });
+    res.status(StatusCodes.OK).json({ message: 'Password has been changed' });
+  } catch (e: any) {
+    res.status(e.statusCode).json({ message: e.message });
   }
 };
 export default changePassword;

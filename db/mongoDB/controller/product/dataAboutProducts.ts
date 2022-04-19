@@ -1,7 +1,6 @@
 import Product from '../../models/product';
 import { Request, Response } from 'express';
-import CustomError from '../../../customError/customError';
-import CustomErrorTypes from '../../../customError/customError.types';
+import { StatusCodes } from 'http-status-codes';
 
 const getDataAboutProductsWithMongoDB = async (req: Request, res: Response) => {
   try {
@@ -26,7 +25,7 @@ const getDataAboutProductsWithMongoDB = async (req: Request, res: Response) => {
           createdAt: -1,
         };
       } else {
-        throw new CustomError('Not such value');
+        return res.status(StatusCodes.BAD_REQUEST).send({ message: 'Not such value' });
       }
     }
 
@@ -70,19 +69,16 @@ const getDataAboutProductsWithMongoDB = async (req: Request, res: Response) => {
         $text: { $search: String(req.query.displayName) },
       };
     }
-
     const data = await Product.find(findOptions)
       .sort(sortOptions)
       .limit(Number(limit))
       .skip((Number(page) - 1) * Number(limit));
     if (data.length === 0) {
-      throw new CustomError('Not found');
+      return res.status(StatusCodes.NOT_FOUND).send({ message: 'Not found' });
     }
-    res.status(200).json(data);
-  } catch (e: CustomErrorTypes | any) {
-    const customError = new CustomError(e.name);
-    const error = customError.defineCategoryAndProductStatus();
-    res.status(error.status).json({ message: error.message });
+    res.status(StatusCodes.OK).json(data);
+  } catch (e: any) {
+    res.status(e.statusCode).json({ message: e.message });
   }
 };
 export default getDataAboutProductsWithMongoDB;

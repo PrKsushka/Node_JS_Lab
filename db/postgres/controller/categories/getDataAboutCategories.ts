@@ -2,8 +2,7 @@ import { Request, Response } from 'express';
 import Category from '../../entity/category';
 import { Equal, getRepository } from 'typeorm';
 import category from '../../entity/category';
-import CustomError from '../../../customError/customError';
-import CustomErrorTypes from '../../../customError/customError.types';
+import { StatusCodes } from 'http-status-codes';
 
 const getDataAboutCategoriesPostgres = async (req: Request, res: Response) => {
   try {
@@ -35,19 +34,17 @@ const getDataAboutCategoriesPostgres = async (req: Request, res: Response) => {
       });
     }
     if (data.length === 0) {
-      throw new CustomError('Not found');
+      return res.status(StatusCodes.NOT_FOUND).send({ message: 'Not found' });
     }
     if (
       (req.query.includeProducts && req.query.includeProducts !== 'true') ||
       (req.query.includeTop3Products && req.query.includeTop3Products !== 'top')
     ) {
-      throw new CustomError('Not such value');
+      return res.status(StatusCodes.BAD_REQUEST).send({ message: 'Not such value' });
     }
-    res.status(200).json(data);
-  } catch (e: CustomErrorTypes | any) {
-    const customError = new CustomError(e.name);
-    const error = customError.defineCategoryAndProductStatus();
-    res.status(error.status).json({ message: error.message });
+    res.status(StatusCodes.OK).json(data);
+  } catch (e: any) {
+    res.status(e.statusCode).json({ message: e.message });
   }
 };
 export default getDataAboutCategoriesPostgres;
