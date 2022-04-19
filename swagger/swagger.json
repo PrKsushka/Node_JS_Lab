@@ -71,6 +71,13 @@
             "example": "Surname"
           }
         }
+      },
+      "token": {
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
       }
     }
   },
@@ -276,6 +283,32 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/changePassword"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token": {
+      "post": {
+        "description": "Get new access token by passing refresh token",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/token"
               }
             }
           }
