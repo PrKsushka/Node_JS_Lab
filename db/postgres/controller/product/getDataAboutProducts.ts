@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import { Between, getRepository, ILike, LessThanOrEqual, MoreThanOrEqual } from 'typeorm';
 import Product from '../../entity/product';
-import CustomError from '../../../customError/customError';
+import { StatusCodes } from 'http-status-codes';
 
 const getDataAboutProductsWithPostgres = async (req: Request, res: Response) => {
   try {
-    let { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 10 } = req.query;
     let option = {};
     if (req.query.sortBy) {
       if (req.query.sortBy === 'price:asc') {
@@ -37,13 +37,13 @@ const getDataAboutProductsWithPostgres = async (req: Request, res: Response) => 
           },
         };
       } else {
-        throw new CustomError('Not such value');
+        return res.status(StatusCodes.BAD_REQUEST).send({ message: 'Not such value' });
       }
     }
 
     if (req.query.price) {
-      let values: string | any = req.query.price;
-      let arr: Array<string> = values.split(':');
+      const values: string | any = req.query.price;
+      const arr: Array<string> = values.split(':');
       let min = null;
       let max = null;
       if (arr.length === 1) {
@@ -93,13 +93,11 @@ const getDataAboutProductsWithPostgres = async (req: Request, res: Response) => 
     const products = await getRepository(Product);
     const data = await products.find({ ...option, skip: (Number(page) - 1) * Number(limit), take: Number(limit) });
     if (data.length === 0) {
-      throw new CustomError('Not found');
+      return res.status(StatusCodes.NOT_FOUND).send({ message: 'Not found' });
     }
-    res.status(200).json(data);
+    res.status(StatusCodes.OK).json(data);
   } catch (e: any) {
-    const customError = new CustomError(e.name);
-    const error = customError.defineStatus();
-    res.status(error.status).json({ message: error.message });
+    res.status(e.statusCode).json({ message: e.message });
   }
 };
 export default getDataAboutProductsWithPostgres;
