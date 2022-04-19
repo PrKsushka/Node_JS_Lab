@@ -1,8 +1,6 @@
 import { Request, Response } from 'express';
 import Category from '../../models/category';
 import { ObjectId } from 'mongodb';
-import CustomError from '../../../customError/customError';
-import CustomErrorTypes from '../../../customError/customError.types';
 import { StatusCodes } from 'http-status-codes';
 
 const getDataAboutCategoriesMongoDB = async (req: Request, res: Response) => {
