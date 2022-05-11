@@ -1,0 +1,319 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Node JS Lab server",
+    "version": "1.0.0",
+    "title": "Node JS Lab"
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "registration": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "user"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "123456"
+          },
+          "firstName": {
+            "type": "string",
+            "example": "Name"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Surname"
+          }
+        }
+      },
+      "authentication": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "user"
+          },
+          "password": {
+            "type": "string",
+            "example": "12345"
+          }
+        }
+      },
+      "changePassword": {
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "example": "12345"
+          },
+          "newPassword": {
+            "type": "string",
+            "example": "123456"
+          }
+        }
+      },
+      "changeDataAboutUser": {
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "Name"
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Surname"
+          }
+        }
+      },
+      "token": {
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/categories": {
+      "get": {
+        "description": "Get information about categories",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Enter id of category"
+          },
+          {
+            "in": "query",
+            "name": "includeProducts",
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "Enter true/false if you need to get products which belong to categories"
+          },
+          {
+            "in": "query",
+            "name": "includeTop3Products",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Enter top if you want to get top 3 products"
+          }
+        ]
+      }
+    },
+    "/products": {
+      "get": {
+        "description": "Get information about products",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Sort by price or production date ascending or descending \n `price:asc` \n `price:desc` \n `createdAt:asc` \n `createdAt:desc`"
+          },
+          {
+            "in": "query",
+            "name": "price",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filter products by price (one of values can also be ommited) \n price=`min`:`max` \n Example: user can search only products cheaper than 40$ with `price=:40` "
+          },
+          {
+            "in": "query",
+            "name": "minRating",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return products with rating more than passed \n minRating=`value`"
+          },
+          {
+            "in": "query",
+            "name": "displayName",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Return products which contain searchString \n displayName=`searchString`"
+          }
+        ]
+      }
+    },
+    "/register": {
+      "post": {
+        "description": "Registrate new user",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/registration"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/authenticate": {
+      "post": {
+        "description": "Authentication",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/authentication"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile": {
+      "put": {
+        "description": "Change data about user (his or her name and surname). Only for `authenticated` user",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/changeDataAboutUser"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/profile/password": {
+      "post": {
+        "description": "Change password. Enter old and new password. Only for authenticated users",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/changePassword"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/token": {
+      "post": {
+        "description": "Get new access token by passing refresh token",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/token"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

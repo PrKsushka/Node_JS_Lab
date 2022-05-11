@@ -8,10 +8,15 @@ import productRoutes from './db/routes/product/productRoutes';
 import categoryRoutes from './db/routes/categories/categoriesRoutes';
 import logger from './logger/logger';
 import userRouter from './db/routes/user/userRoutes';
+import swaggerUI from 'swagger-ui-express';
+import * as swaggerDocs from './swagger/swagger.json';
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+
 if (process.argv[2] === 'mongodb') {
   connectionToMongoDataBase();
   app.use(productRoutes.getDataAboutProductsRouterForMongoDB);
