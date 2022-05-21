@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import Category from './category';
-import ProductType from '../../types/productType';
+import ProductType from '../../types/product.types';
 
 @Entity()
 class Product implements ProductType {
