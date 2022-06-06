@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
-import ProductsTypes from '../../types/productType';
+import ProductsTypes from '../../types/product.types';
 
 const productSchema = new mongoose.Schema({
   displayName: {
     type: String,
-    require: true,
+    required: true,
   },
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,
@@ -12,16 +12,28 @@ const productSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    require: true,
+    required: true,
   },
   totalRating: {
     type: Number,
-    require: true,
+    required: true,
   },
   price: {
     type: Number,
-    require: true,
+    required: true,
   },
+  ratings: [
+    {
+      userId: {
+        ref: 'User',
+        type: mongoose.Types.ObjectId,
+      },
+      rating: {
+        type: Number,
+        required: true,
+      },
+    },
+  ],
 });
 productSchema.index({ displayName: 'text' });
 const Product = mongoose.model<ProductsTypes>('Products', productSchema);

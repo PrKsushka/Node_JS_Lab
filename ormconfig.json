@@ -2,7 +2,7 @@
   "type": "postgres",
   "host": "localhost",
   "port": 5432,
-  "username": "test",
+  "username": "prksushka",
   "password": "test",
   "database": "shop",
   "synchronize": true,

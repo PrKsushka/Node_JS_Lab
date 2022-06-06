@@ -1,4 +1,4 @@
-interface UserType {
+interface UserTypes {
   id: number;
   username: string;
   password: string;
@@ -7,4 +7,4 @@ interface UserType {
   lastName: string;
 }
 
-export default UserType;
+export default UserTypes;

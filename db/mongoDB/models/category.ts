@@ -1,14 +1,14 @@
 import mongoose from 'mongoose';
-import CategoryTypes from '../../types/categoryType';
+import CategoryTypes from '../../types/category.types';
 
 const categorySchema = new mongoose.Schema({
   displayName: {
     type: String,
-    require: true,
+    required: true,
   },
   createdAt: {
     type: Date,
-    require: true,
+    required: true,
   },
 });
 const Category = mongoose.model<CategoryTypes>('Categories', categorySchema);

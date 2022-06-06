@@ -1,8 +1,8 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
-import UserType from '../../types/userType';
+import UserTypes from '../../types/user.types';
 
 @Entity()
-class User implements UserType {
+class User implements UserTypes {
   @PrimaryGeneratedColumn()
   id: number;
 
