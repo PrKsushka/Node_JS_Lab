@@ -11,6 +11,8 @@ import userRouter from './db/routes/user/userRoutes';
 import orderListRoutes from './db/routes/orderList/orderListRoutes';
 import swaggerUI from 'swagger-ui-express';
 import * as swaggerDocs from './swagger/swagger.json';
+import adminRoutesForCategories from './db/routes/admin/adminRoutesForCategories';
+import adminRoutesForProducts from './db/routes/admin/adminRoutesForProducts';
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -24,12 +26,16 @@ if (process.argv[2] === 'mongodb') {
   app.use(categoryRoutes.getDataAboutCategoriesRouterForMongoDB);
   app.use(userRouter);
   app.use(orderListRoutes.orderListRoutesForMongoDB);
+  app.use(adminRoutesForCategories.adminRouteMongoDB);
+  app.use(adminRoutesForProducts.adminRouteMongoDB);
 } else if (process.argv[2] === 'postgres') {
   connectionToPostgresDataBase();
   app.use(productRoutes.getDataAboutProductsRouterForPostgres);
   app.use(categoryRoutes.getDataAboutCategoriesRouterForPostgres);
   app.use(userRouter);
   app.use(orderListRoutes.orderListRoutesForPostgres);
+  app.use(adminRoutesForCategories.adminRoutePostgres);
+  app.use(adminRoutesForProducts.adminRoutePostgres);
 }
 app.listen(process.env.PORT, () => {
   logger.info(`Server is running on port ${process.env.PORT}`);
