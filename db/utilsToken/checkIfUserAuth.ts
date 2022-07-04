@@ -2,11 +2,11 @@ import jwt from 'jsonwebtoken';
 import CustomError from '../customError/customError';
 import { NextFunction, Request, Response } from 'express';
 
-function auth(req: Request | any, res: Response, next: NextFunction) {
+function authUser(req: Request | any, res: Response, next: NextFunction) {
   let token = req.headers['authorization'];
   token = token.split(' ')[1];
   jwt.verify(token, 'access', (err: any, user: any) => {
-    if (!err) {
+    if (!err && user.role === 'user') {
       req.user = user;
       next();
     } else {
@@ -17,4 +17,4 @@ function auth(req: Request | any, res: Response, next: NextFunction) {
   });
 }
 
-export default auth;
+export default authUser;

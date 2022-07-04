@@ -1,10 +1,10 @@
-import { Column, Entity, JoinColumn, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import Product from './product';
 import CategoryTypes from '../../types/category.types';
 
 @Entity()
 class Category implements CategoryTypes {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column()

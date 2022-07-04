@@ -10,8 +10,12 @@ class Product implements ProductType {
   @Column()
   displayName: string;
 
+  @Column()
+  categoryId: number;
+
   @ManyToOne(() => Category, (category) => category.id)
-  categoryId: Category;
+  @JoinColumn({ name: 'categoryId' })
+  category: Category;
 
   @Column({ type: 'date' })
   createdAt: string;

@@ -6,7 +6,7 @@ import { StatusCodes } from 'http-status-codes';
 
 const register = async (req: Request, res: Response) => {
   try {
-    const { username, password, firstName, lastName } = req.body;
+    const { username, password, firstName, lastName, role } = req.body;
     if (!username || !password) {
       return res.status(StatusCodes.NOT_FOUND).send({ message: 'Not valid' });
     }
@@ -20,6 +20,7 @@ const register = async (req: Request, res: Response) => {
       password: hashPassword,
       firstName,
       lastName,
+      role,
     });
     const token = TokenService.generateToken(newUser.id, newUser.username, newUser.role);
     const refreshToken = TokenService.refreshToken(newUser.id, newUser.username, newUser.role);

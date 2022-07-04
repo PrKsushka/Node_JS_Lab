@@ -1,5 +1,5 @@
 import express from 'express';
-import auth from '../../utilsToken/checkIfAuth';
+import auth from '../../utilsToken/checkIfUserAuth';
 import addProductToOrderList from '../../postgres/controller/orderList/addProductToOrderList';
 import editProductList from '../../postgres/controller/orderList/editProductList';
 import clearOrderList from '../../postgres/controller/orderList/clearOrderList';

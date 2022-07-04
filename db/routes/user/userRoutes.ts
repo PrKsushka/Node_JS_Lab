@@ -3,7 +3,7 @@ import registerWithMongoDB from '../../mongoDB/controller/user/register';
 import authenticateWithMongoDB from '../../mongoDB/controller/user/authenticate';
 import changeDataAboutUserMongoDB from '../../mongoDB/controller/user/changeDataAboutUser';
 import refreshToken from '../../utilsToken/refreshToken';
-import auth from '../../utilsToken/checkIfAuth';
+import auth from '../../utilsToken/checkIfUserAuth';
 import changePasswordWithMongoDB from '../../mongoDB/controller/user/changePassword';
 import process from 'process';
 import authenticatePostgres from '../../postgres/controller/user/authenticate';
